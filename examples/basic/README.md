@@ -10,8 +10,8 @@ This directory contains an example usage of the **terraform-gcp-module-template*
 
 | Name      | Version   |
 |-----------|-----------|
-| Terraform | >= 1.6.6  |
-| GCP       | >= 6.49.1 |
+| Terraform | >= 0.14   |
+| GCP       | >= 6.44.0 |
 
 ---
 

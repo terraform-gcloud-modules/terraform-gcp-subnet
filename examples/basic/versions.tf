@@ -1,16 +1,12 @@
-##-----------------------------------------------------------------------------
-## Versions
-##-----------------------------------------------------------------------------
-# Terraform version
 terraform {
-  required_version = ">= 1.6.6"
-}
+  required_version = ">= 0.14, < 2.0"
 
-terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = ">=6.49.1"
+      version = ">= 6.44.0"
+
+
     }
   }
 }

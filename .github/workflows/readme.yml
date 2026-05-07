@@ -2,7 +2,7 @@ name: Readme Workflow
 on:
   push:
     branches:
-      - feature/subnet-module-improvements
+      - master
     paths-ignore:
       - 'README.md'
       - 'docs/**'

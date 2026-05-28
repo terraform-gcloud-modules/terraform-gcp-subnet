@@ -1,7 +1,6 @@
 module "labels" {
-  source  = "clouddrove/labels/gcp"
-  version = "1.0.0"
-
+  source  = "git::https://github.com/terraform-gcloud-modules/terraform-gcp-labels.git?ref=v0.0.1"
+  
   name        = var.name
   environment = var.environment
   label_order = var.label_order

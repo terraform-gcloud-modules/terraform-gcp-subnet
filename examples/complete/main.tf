@@ -10,7 +10,7 @@ locals {
   label_order = var.label_order
 }
 module "vpc" {
-source = "git::https://github.com/terraform-gcloud-modules/terraform-gcp-vpc.git?ref=v0.0.1"
+  source = "git::https://github.com/terraform-gcloud-modules/terraform-gcp-vpc.git?ref=v0.0.1"
 
   name        = var.name
   environment = var.environment

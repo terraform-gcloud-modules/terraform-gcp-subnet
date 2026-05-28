@@ -5,22 +5,25 @@
 #
 
 # Name of this project
-name : Terraform GCP Module Template
+name: Terraform GCP Subnet
 
 # License of this project
 license: "APACHE"
 
-# Canonical GitHub repo
-github_repo: terraform-gcp-modules/terraform-module-template
+# Canonical GitHub repo (Assumed based on your naming convention)
+github_repo: terraform-gcloud-modules/terraform-gcp-subnet
 
 # Badges to display
 badges:
-  - name: "Terraform"
-    image: "https://img.shields.io/badge/Terraform-v0.13-green"
-    url: "https://www.terraform.io"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/terraform-gcloud-modules/terraform-gcp-subnet.svg"
+    url: "https://github.com/terraform-gcloud-modules/terraform-gcp-subnet/releases/latest"
+  - name: "tfsec"
+    image: "https://github.com/terraform-gcloud-modules/terraform-gcp-subnet/actions/workflows/security-tfsec.yml/badge.svg"
+    url: "https://github.com/terraform-gcloud-modules/terraform-gcp-subnet/actions/workflows/security-tfsec.yml"
   - name: "Licence"
     image: "https://img.shields.io/badge/License-APACHE-blue.svg"
-    url: "LICENSE.md"
+    url: "LICENSE"
   - name: "Changelog"
     image: "https://img.shields.io/badge/Changelog-blue"
     url: "CHANGELOG.md"
@@ -29,21 +32,42 @@ badges:
 prerequesties:
   - name: Terraform
     url: https://learn.hashicorp.com/terraform/getting-started/install.html
-    version: ">= 1.6.6"
+    version: ">= 1.14, < 2.0"
 
 providers:
   - name: google
     url: https://cloud.google.com/
-    version: ">= 6.49.1"
+    version: ">= 4.64, < 8"
 
 # description of this project
 description: |-
-  Terraform GCP Module Template to create new modules using this as baseline
+  Terraform module for creating and managing Google Cloud VPC Subnetworks. This module supports configuring custom CIDR ranges, secondary IP ranges (alias IPs), private Google access, VPC flow logs, and IPv6 configurations.
 
 # How to use this project
-# How to use this project
 usage: |-
-  Here are some examples of how you can use this module in your inventory structure:
+  Basic example:
   ```hcl
-    locals {}
-    ```
+    module "subnet" {
+      source = "[github.com/terraform-gcloud-modules/terraform-gcp-subnet](https://github.com/terraform-gcloud-modules/terraform-gcp-subnet)"
+
+      name        = "basic"
+      environment = "test"
+      label_order = ["environment", "name"]
+      
+      project_id  = "your-gcp-project-id"
+      network     = "your-vpc-network-name" 
+      gcp_region  = "asia-south1"
+
+      subnets = [
+        {
+          name                     = "main"
+          ip_cidr_range            = "10.10.0.0/24"
+          region                   = "asia-south1"
+          description              = "Basic example subnet"
+          private_ip_google_access = true
+          stack_type               = "IPV4_ONLY"
+          secondary_ip_ranges      = []
+          log_config               = null
+        }
+      ]
+    }

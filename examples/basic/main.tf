@@ -22,9 +22,9 @@ module "vpc" {
 module "subnet" {
   source = "../../"
 
-  name        = "basic"
-  environment = var.environment
-  label_order = var.label_order
+  name        = local.name
+  environment = local.environment
+  label_order = local.label_order
   project_id  = var.gcp_project_id
   network     = module.vpc.vpc_id
   gcp_region  = var.gcp_region

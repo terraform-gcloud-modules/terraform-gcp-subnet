@@ -1,8 +1,15 @@
+# ------------------------------------------------------------------------------
+# Variables
+# ------------------------------------------------------------------------------
 provider "google" {
   project = var.gcp_project_id
   region  = var.gcp_region
   zone    = var.gcp_zone
 }
+
+# ------------------------------------------------------------------------------
+# Resources
+# ------------------------------------------------------------------------------
 
 locals {
   name        = "basic"
@@ -12,10 +19,10 @@ locals {
 module "vpc" {
   source = "git::https://github.com/terraform-gcloud-modules/terraform-gcp-vpc.git?ref=v0.0.1"
 
-  name        = var.name
+  name        = "my-vpc"
   environment = var.environment
   label_order = ["name", "environment"]
-  project_id  = var.project_id
+  project_id  = var.gcp_project_id
 }
 
 module "subnet" {
@@ -27,6 +34,14 @@ module "subnet" {
   project_id  = var.gcp_project_id
   network     = module.vpc.vpc_id
   gcp_region  = var.gcp_region
+
+  module_timeouts = {
+    google_compute_subnetwork = {
+      create = "20m"
+      update = "30m"
+      delete = "20m"
+    }
+  }
 
   # ── 3 SUBNETS created in one go ──────────────────────────────
   subnets = [
@@ -50,7 +65,7 @@ module "subnet" {
       ip_cidr_range            = "10.20.0.0/24"
       region                   = "us-central1"
       description              = "Application tier subnet"
-      private_ip_google_access = true
+      private_ip_google_access = false
       stack_type               = "IPV4_ONLY"
       # GKE secondary ranges on this subnet
       secondary_ip_ranges = [
@@ -61,7 +76,7 @@ module "subnet" {
         aggregation_interval = "INTERVAL_5_SEC"
         flow_sampling        = 0.5
         metadata             = "INCLUDE_ALL_METADATA"
-        filter_expr          = "true"
+        filter_expr          = "false" # flow logs off for app subnet
       }
     },
     {

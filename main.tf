@@ -1,3 +1,7 @@
+#-------------------------------------------------------------------------------
+# Module "labels" Configuration #
+#-------------------------------------------------------------------------------
+
 module "labels" {
   source = "git::https://github.com/terraform-gcloud-modules/terraform-gcp-labels.git?ref=v0.0.1"
 
@@ -5,6 +9,10 @@ module "labels" {
   environment = var.environment
   label_order = var.label_order
 }
+
+#---------------------------------------------------------------------------------
+# Google_Compute_Subnetwork_Configuration #
+#---------------------------------------------------------------------------------
 
 resource "google_compute_subnetwork" "subnetwork" {
   for_each = var.google_compute_subnetwork_enabled && var.module_enabled ? {

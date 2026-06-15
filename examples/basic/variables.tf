@@ -22,8 +22,3 @@ variable "gcp_region" {
   type    = string
   default = "asia-south1"
 }
-
-variable "gcp_zone" {
-  type    = string
-  default = "asia-south1-a"
-}

@@ -14,6 +14,7 @@ variable "label_order" {
 
 variable "gcp_project_id" {
   type        = string
+  default     = null
   description = "GCP Project ID. Required."
 }
 

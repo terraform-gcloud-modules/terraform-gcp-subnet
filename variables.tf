@@ -27,12 +27,8 @@ variable "label_order" {
 
 variable "project_id" {
   type        = string
+  default     = null
   description = "GCP project ID where all resources will be created. Required — no default."
-
-  validation {
-    condition     = length(var.project_id) > 0
-    error_message = "project_id must not be empty. Provide your GCP project ID."
-  }
 }
 
 variable "network" {
